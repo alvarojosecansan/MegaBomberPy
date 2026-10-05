@@ -17,7 +17,7 @@ if __name__ == "__main__":
     pygame.display.set_caption(TITULO1)
     reloj = pygame.time.Clock()
 
-    # --- ICONOS DE LA BARRA SUPERIOR ---
+    # Carga de iconos del HUD superior utilizando RUTA_ASSETS absoluta
     iconos = {
         "fuego": pygame.transform.scale(pygame.image.load(RUTA_ASSETS + "icon_flame.png").convert_alpha(), (32, 32)),
         "bomba": pygame.transform.scale(pygame.image.load(RUTA_ASSETS + "icon_bomb.png").convert_alpha(), (32, 32)),
@@ -28,7 +28,6 @@ if __name__ == "__main__":
     nivel = Level1()
     ejecutando = True
 
-    # --- BUCLE PRINCIPAL DEL JUEGO ---
     while ejecutando:
         reloj.tick(FPS)
         eventos = pygame.event.get()
@@ -40,7 +39,6 @@ if __name__ == "__main__":
         nivel.actualizar()
         nivel.dibujar(pantalla, ANCHO, ALTO, COLOR_FONDO1, COLOR_BARRA_SUP, iconos)
         pygame.display.flip()
-
 
     pygame.quit()
     sys.exit()

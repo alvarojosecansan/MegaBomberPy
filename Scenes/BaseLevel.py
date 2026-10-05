@@ -15,9 +15,9 @@ class BaseLevel:
     def __init__(self, numero_nivel):
         self.numero_nivel = numero_nivel
         
-        # --- CARGAR AUDIO DE POWER-UPS ---
+        # --- CARGAR AUDIO DE POWER-UPS USANDO RUTA GLOBAL ---
         try:
-            self.sonido_item = pygame.mixer.Sound("Soundtracks/ytmp3free (mp3cut.net).mp3")
+            self.sonido_item = pygame.mixer.Sound(RUTA_SOUNDTRACKS + "ytmp3free (mp3cut.net).mp3")
             self.sonido_item.set_volume(0.5)
         except Exception as e:
             self.sonido_item = None
@@ -39,10 +39,10 @@ class BaseLevel:
                 [1, 0, 0, 0, 2, 0, 2, 0, 2, 0, 2, 0, 0, 0, 1], 
                 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
             ]
-            musica_ruta = "Soundtracks/portal2_science_is_fun.mp3"
-            piso_img = "Assets/bombman/tile_env1_floor.png"
-            muro_img = "Assets/bombman/tile_env1_wall.png"
-            caja_img = "Assets/bombman/tile_env1_block.png"
+            musica_ruta = RUTA_SOUNDTRACKS + "portal2_science_is_fun.mp3"
+            piso_img = RUTA_ASSETS + "tile_env1_floor.png"
+            muro_img = RUTA_ASSETS + "tile_env1_wall.png"
+            caja_img = RUTA_ASSETS + "tile_env1_block.png"
             
         elif self.numero_nivel == 2:
             self.matriz_original = [
@@ -60,10 +60,10 @@ class BaseLevel:
                 [1, 0, 0, 2, 2, 2, 0, 2, 0, 2, 2, 2, 0, 0, 1],
                 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
             ]
-            musica_ruta = "Soundtracks/sonic_icecap.mp3"
-            piso_img = "Assets/bombman/tile_env6_floor.png"
-            muro_img = "Assets/bombman/tile_env6_wall.png"
-            caja_img = "Assets/bombman/tile_env6_block.png"
+            musica_ruta = RUTA_SOUNDTRACKS + "sonic_icecap.mp3"
+            piso_img = RUTA_ASSETS + "tile_env6_floor.png"
+            muro_img = RUTA_ASSETS + "tile_env6_wall.png"
+            caja_img = RUTA_ASSETS + "tile_env6_block.png"
             
         elif self.numero_nivel == 3:
             self.matriz_original = [
@@ -81,15 +81,15 @@ class BaseLevel:
                 [1, 0, 0, 0, 0, 2, 0, 2, 0, 2, 0, 0, 0, 0, 1],
                 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
             ]
-            musica_ruta = "Soundtracks/sonic_sand_ocean.mp3"
-            piso_img = "Assets/bombman/tile_env7_floor.png"
-            muro_img = "Assets/bombman/tile_env7_wall.png"
-            caja_img = "Assets/bombman/tile_env7_block.png"
+            musica_ruta = RUTA_SOUNDTRACKS + "sonic_sand_ocean.mp3"
+            piso_img = RUTA_ASSETS + "tile_env7_floor.png"
+            muro_img = RUTA_ASSETS + "tile_env7_wall.png"
+            caja_img = RUTA_ASSETS + "tile_env7_block.png"
 
         self.nivel_actual = [fila[:] for fila in self.matriz_original]
         ts = TILE_SIZE
 
-        # --- CARGAR TEXTURAS DE LOS TILES ---
+        # --- CARGAR TEXTURAS DE LOS TILES Y FLAMAS USANDO RUTA_ASSETS ---
         self.texturas_mapa = {
             "piso": pygame.transform.scale(pygame.image.load(piso_img).convert(), (ts, ts)),
             "muro": pygame.transform.scale(pygame.image.load(muro_img).convert(), (ts, ts)),
@@ -116,8 +116,8 @@ class BaseLevel:
         self.duracion_fuego = 20
         self.game_over = False
 
-        # --- CONFIGURACIÓN DE FUENTES Y MÚSICA ---
-        ruta_fuente = "Assets/bombman/VCR_OSD_MONO_1.001.ttf"
+        # --- CONFIGURACIÓN DE FUENTES Y MÚSICA USANDO RUTA_ASSETS ---
+        ruta_fuente = RUTA_ASSETS + "VCR_OSD_MONO_1.001.ttf"
         try:
             self.fuente_grande = pygame.font.Font(ruta_fuente, 42)
             self.fuente_mediana = pygame.font.Font(ruta_fuente, 27)
