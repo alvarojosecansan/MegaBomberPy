@@ -1,9 +1,10 @@
 import pygame
 
 # --- Configuración de la Ventana ---
-ANCHO = 1020
-ALTO = 816
+ANCHO = 840
+ALTO = 784
 FPS = 60
+
 
 TITULO = "Mega Bomber Py"
 TITULO1 = "Nivel 1: Zona de Pruebas"
@@ -17,6 +18,6 @@ COLOR_BARRA_SUP = (0, 0, 0)
 
 
 # --- Configuración de Tiles y Rutas ---
-TILE_SIZE = 68
+TILE_SIZE = 56
 RUTA_ASSETS = "Assets/bombman/"
 RUTA_SOUNDTRACKS = "Soundtracks/"

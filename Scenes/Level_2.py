@@ -1,74 +1,45 @@
 import pygame
+import os
 import sys
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from Setting import *
+from Scenes.BaseLevel import BaseLevel
 
-pygame.init()
-pygame.mixer.init()
+class Level2(BaseLevel):
+    def __init__(self):
+        super().__init__(2)
 
-# Configuración de música
-pygame.mixer.music.load("Soundtracks/sonic_icecap.mp3")
-pygame.mixer.music.set_volume(0.4)
-pygame.mixer.music.play(-1)
+if __name__ == "__main__":
+    pygame.init()
+    pygame.mixer.init()
+    pantalla = pygame.display.set_mode((ANCHO, ALTO))
+    pygame.display.set_caption(TITULO2)
+    reloj = pygame.time.Clock()
 
-pantalla = pygame.display.set_mode((ANCHO, ALTO))
-pygame.display.set_caption(TITULO2)
-reloj = pygame.time.Clock()
-ejecutando = True
+    # --- ICONOS DE LA BARRA SUPERIOR ---
+    iconos = {
+        "fuego": pygame.transform.scale(pygame.image.load(RUTA_ASSETS + "icon_flame.png").convert_alpha(), (24, 24)),
+        "bomba": pygame.transform.scale(pygame.image.load(RUTA_ASSETS + "icon_bomb.png").convert_alpha(), (24, 24)),
+        "velocidad": pygame.transform.scale(pygame.image.load(RUTA_ASSETS + "icon_kicking_shoe.png").convert_alpha(), (24, 24)),
+        "vida": pygame.transform.scale(pygame.image.load(RUTA_ASSETS + "icon_vida.png").convert_alpha(), (24, 24))
+    }
 
-tile_size = TILE_SIZE
+    nivel = Level2()
+    ejecutando = True
 
-# Carga y escalado de texturas
-superficie_piso = pygame.image.load("Assets/bombman/tile_env6_floor.png").convert()
-img_cesped = pygame.transform.scale(superficie_piso, (tile_size, tile_size))
+    # --- BUCLE PRINCIPAL DEL JUEGO ---
+    while ejecutando:
+        reloj.tick(FPS)
+        eventos = pygame.event.get()
+        for evento in eventos:
+            if evento.type == pygame.QUIT:
+                ejecutando = False
 
-superficie_pared = pygame.image.load("Assets/bombman/tile_env6_wall.png").convert()
-img_muro = pygame.transform.scale(superficie_pared, (tile_size, tile_size))
+        nivel.manejar_eventos(eventos)
+        nivel.actualizar()
+        nivel.dibujar(pantalla, ANCHO, ALTO, COLOR_FONDO1, COLOR_BARRA_SUP, iconos)
+        pygame.display.flip()
 
-superficie_bloque = pygame.image.load("Assets/bombman/tile_env6_block.png").convert_alpha()
-img_caja = pygame.transform.scale(superficie_bloque, (tile_size, tile_size))
-
-# Matriz del nivel
-nivel_actual = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 1],
-    [1, 0, 1, 0, 1, 0, 1, 2, 1, 0, 1, 0, 1, 0, 1],
-    [1, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 1],
-    [1, 2, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 2, 1],
-    [1, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 1],
-    [1, 2, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 2, 1],
-    [1, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 1],
-    [1, 0, 1, 0, 1, 0, 1, 2, 1, 0, 1, 0, 1, 0, 1],
-    [1, 0, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0, 0, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-]
-
-# Bucle principal
-while ejecutando:
-    for evento in pygame.event.get():
-        if evento.type == pygame.QUIT:
-            ejecutando = False
-    
-    pantalla.fill(COLOR_FONDO1)
-
-    offset_y = tile_size  
-    offset_x = 0   
-
-    for fila_idx, fila in enumerate(nivel_actual):
-        for col_idx, valor in enumerate(fila):
-            x = int(offset_x + (col_idx * tile_size))
-            y = int(offset_y + (fila_idx * tile_size))
-
-            if valor == 0:
-                pantalla.blit(img_cesped, (x, y))
-            elif valor == 1:
-                pantalla.blit(img_muro, (x, y))
-            elif valor == 2:
-                pantalla.blit(img_caja, (x, y))
-
-    pygame.draw.rect(pantalla, COLOR_BARRA_SUP, (0, 0, ANCHO, tile_size))
-
-    pygame.display.flip()
-    reloj.tick(FPS)
-
-pygame.quit()
-sys.exit()
+    pygame.quit()
+    sys.exit()
